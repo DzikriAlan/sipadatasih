@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\PenggunaEnum;
+use App\Pelayanan;
+use App\Pengguna;
+use App\Penduduk;
+use App\Permohonan;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
@@ -14,6 +18,114 @@ use Validator;
 class BerandaController extends Controller
 {
     // tentang
+    public function tampilanPermohonan()
+    {
+        $penduduk = null;
+        $daftar_pelayanan = Pelayanan::pluck('nama', 'id');
+        $no_sp = null;
+        return view('beranda.permohonan-tambah', compact('daftar_pelayanan', 'penduduk', 'no_sp'));
+    }
+
+    public function findNik(Request $request){
+        $nik = $request->get('nik');
+        $penduduk = DB::table('penduduk')->where('nik', $nik)->first();
+        if ($penduduk){
+            $increment_number = DB::table('master_increment')->where('nama', 'no_sp')->first();
+            $no = $increment_number->number + 1;
+
+            $now = Carbon::now()->format('d/m/Y');
+            $no_sp = $now . "/" . strval($no);
+            $increment_number_update = DB::table('master_increment')->where('nama', 'no_sp')->update(['number' => $no]);
+            $daftar_pelayanan = Pelayanan::pluck('nama', 'id');
+            return view('beranda.permohonan-tambah', compact('daftar_pelayanan', 'penduduk', 'no_sp'));
+            // dd($penduduk);
+        } else {
+            Session::flash('pesan', 'NIK anda tidak ditemukan!');
+            redirect('beranda.permohonan-tambah');
+        }
+    }
+
+    public function storePermohonan(Request $request){
+        $input = $request->all();
+
+        if($input['id_layanan'] === "17"){
+            $validator = Validator::make($request->all(), [
+                'nik' => 'required',
+                'id_layanan' => 'required',
+                'jenis_usaha' => 'required',
+                'alamat_usaha' => 'required',
+                'penggunaan' => 'required',
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'nik' => 'required',
+                'id_layanan' => 'required',
+                'penggunaan' => 'required',
+            ]);
+        }
+        if ($validator->fails()) {
+            Session::flash('pesan_error', $validator->errors()->first());
+            $penduduk = DB::table('penduduk')->where('nik', $input['nik'])->first();
+        
+            if ($penduduk) {
+                $no_sp = $input['no_sp'];
+                $daftar_pelayanan = Pelayanan::pluck('nama', 'id');
+                
+                // Pass data directly to the view without using dd()
+                return view('beranda.permohonan-tambah', compact('penduduk', 'no_sp', 'daftar_pelayanan'));
+            } else {
+                // Handle the case when $penduduk is not found
+                return redirect()->back()->withInput();
+            }
+        }
+
+        $input['id_user'] = 13;
+        $jsonData = json_encode($input);
+
+        Permohonan::create($input);
+        Session::flash('pesan', 'Permohonan Berhasil Ditambah');
+        return redirect()->route('tampilanPermohonan');
+    }    
+
+    public function halamanCekStatus()
+    {
+        Session::forget('pesan_error');
+        return view('beranda.permohonan-cek');
+    }
+
+    public function cekStatusNik(Request $request){
+        $nik = $request->get('nik');
+        $penduduk = Penduduk::where('nik', $nik)->first();
+        if ($penduduk){
+            Session::forget('pesan_error');
+            $pengguna = Pengguna::where('id_penduduk', $penduduk->id)->first();
+            $dataPermohonan = DB::table('permohonan')
+                ->join('pelayanan', 'permohonan.id_layanan', '=', 'pelayanan.id')
+                ->join('penduduk', 'permohonan.nik', '=', 'penduduk.nik')
+                ->join('pengguna', 'permohonan.id_user', '=', 'pengguna.id')
+                ->where('permohonan.nik', $nik)
+                ->select('permohonan.*', 'pelayanan.nama as nama_pelayanan', 'penduduk.*', 'pengguna.*')
+                ->get();
+            $increment_number = DB::table('master_increment')->where('nama', 'no_sp')->first();
+            $no = $increment_number->number + 1;
+
+            $now = Carbon::now()->format('d/m/Y');
+            $no_sp = $now . "/" . strval($no);
+            $increment_number_update = DB::table('master_increment')->where('nama', 'no_sp')->update(['number' => $no]);
+            $daftar_pelayanan = Pelayanan::pluck('nama', 'id');
+
+            return view('beranda.dashboard', compact('daftar_pelayanan', 'pengguna', 'penduduk', 'no_sp', 'dataPermohonan'));
+        } else {
+            $penduduk = null;
+            $daftar_pelayanan = Pelayanan::pluck('nama', 'id');
+            $no_sp = null;
+            $pengguna = null;
+            $dataPermohonan = null;
+            Session::flash('pesan_error', 'NIK anda tidak ditemukan!');
+            return view('beranda.permohonan-cek');
+        }
+    }
+    
     public function profil()
     {
         $daftar_batas = \App\Batas::all();

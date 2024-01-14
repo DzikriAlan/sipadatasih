@@ -181,17 +181,16 @@
 
                     @if (Session::has('ketua_rt'))
                         @if (Request::segment(1) === 'permohonan')
-                            <li class="active"><a href="{{ url('permohonan') }}">
-                                <i class="menu-icon fa fa-file-text"></i>PERMOHONAN &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>
-                            </li>
-                        @else
-                            <li>
-                                <a href="{{ url('permohonan') }}"><i class="menu-icon fa fa-file-text"></i>PERMOHONAN &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>
-                                </a>
-                            </li>
+                            <li><a href="{{ url('permohonan') }}"><i class="menu-icon fa fa-file-text"></i>PERMOHONAN
+                                    &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>
+                                </a></li>
+                                @else
+                            <li><a href="{{ url('permohonan') }}"><i class="menu-icon fa fa-file-text"></i>PERMOHONAN
+                                    &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>
+                                </a></li>
                         @endif
                         @if (Request::segment(1) === 'penduduk')
-                            <li class="menu-item-has-children dropdown active">
+                            <li class="menu-item-has-children dropdown">
                             @else
                             <li class="menu-item-has-children dropdown">
                         @endif
@@ -210,6 +209,7 @@
                             <li class="active"><a href="{{ url('permohonan') }}"><i
                                         class="menu-icon fa fa-file-text"></i>PERMOHONAN
                                     &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>
+                                </a></li>
                                 @else
                             <li><a href="{{ url('permohonan') }}"><i class="menu-icon fa fa-file-text"></i>PERMOHONAN
                                     &nbsp;<span class="badge badge-primary"> {{ $permohonan_count->count() }} </span>

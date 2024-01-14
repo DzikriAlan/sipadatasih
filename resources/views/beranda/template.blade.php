@@ -115,7 +115,6 @@
             <div class="site-navbar">
                 <div class="container-fluid py-1">
                     <div class="row align-items-center">
-
                         <div class="col-5 text-left">
                             <a href="{{ url('/') }}">
                                 <img src="{{ asset('assets-dashboard/images/' . $profil->logo) }}" width="45"
@@ -132,7 +131,6 @@
                                 </h5> --}}
                             </a>
                         </div>
-
                         <div class="col-7">
                             <nav class="site-navigation text-right" role="navigation">
                                 <div class="container-fluid">
@@ -154,7 +152,6 @@
                                                         LEMBAGA</a></li>
                                                 <li><a href="{{ url('beranda/dokumen') }}"><i class="fa fa-file"></i>
                                                         DOKUMEN</a></li>
-
                                                 <li class="has-children">
                                                     <a href="#"><i class="fa fa-building-o"></i> FASILITAS</a>
                                                     <ul class="dropdown arrow-top">
@@ -174,10 +171,17 @@
                                                                     class="fa fa-book"></i> PENDIDIKAN</a></li>
                                                     </ul>
                                                 </li>
-
                                             </ul>
                                         </li>
-
+                                        <li class="has-children">
+                                            <a href="#"> <i class="fa fa-home"></i> PELAYANAN</a>
+                                            <ul class="dropdown arrow-top">
+                                                <li><a href="{{ url('pelayanan/permohonan') }}"> <i class="fa fa-info-circle"></i>
+                                                        BUAT PERMOHONAN</a></li>
+                                                <li><a href="{{ url('pelayanan/cek/permohonan') }}"><i
+                                                            class="fa fa-file"></i> CEK STATUS</a></li>
+                                            </ul>
+                                        </li>
                                         {{-- <li class="has-children">
                                             <a href="#"><i class="fa fa-money"></i> KEUANGAN</a>
                                             <ul class="dropdown arrow-top">

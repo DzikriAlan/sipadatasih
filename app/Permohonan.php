@@ -12,7 +12,7 @@ class Permohonan extends Model
     protected $fillable = [
         'id_layanan', 'no_sp', 'no_register', 'tgl_sp', 'alamat_domisili', 'desa_domisili', 'kecamatan_domisili',
         'kabupaten_domisili', 'provinsi_domisili', 'rt_domisili', 'rw_domisili', 'keterangan', 'penggunaan',
-        'is_pendatang', 'status', 'nik', 'id_user', 'alasan_tolak'
+        'is_pendatang', 'status', 'nik', 'id_user', 'alasan_tolak', 'created_by', 'updated_by'
     ];
 
     // protected $attributes = [

@@ -68,11 +68,10 @@
                                     style="text-align: left;">
                                     PEMERINTAH KELURAHAN {{ $profil->nama }}
                                     <br>
-                                    KECAMATAN CIKARANG BARAT, kABUPATEN BEKASI
+                                    KECAMATAN CIKARANG BARAT, KABUPATEN BEKASI
                                 </h5> --}}
                             </a>
                         </div>
-
                         <div class="col-7">
                             <nav class="site-navigation text-right" role="navigation">
                                 <div class="container-fluid">
@@ -80,8 +79,7 @@
                                             class="site-menu-toggle js-menu-toggle text-white"><span
                                                 class="icon-menu h3"></span></a></div>
 
-                                    <ul class="site-menu js-clone-nav d-none d-xl-block text-center">
-                                        <li class="has-children">
+                                    <ul class="site-menu js-clone-nav d-none d-xl-block text-center"> <li class="has-children">
                                             <a href="#"> <i class="fa fa-home"></i> TENTANG</a>
                                             <ul class="dropdown arrow-top">
                                                 <li><a href="{{ url('beranda/profil') }}"> <i class="fa fa-info"></i>
@@ -117,7 +115,15 @@
 
                                             </ul>
                                         </li>
-
+                                        <li class="has-children">
+                                            <a href="#"> <i class="fa fa-home"></i> PELAYANAN</a>
+                                            <ul class="dropdown arrow-top">
+                                                <li><a href="{{ url('pelayanan/permohonan') }}"> <i class="fa fa-info"></i>
+                                                        BUAT PERMOHONAN</a></li>
+                                                <li><a href="{{ url('pelayanan/cek/permohonan') }}"><i
+                                                            class="fa fa-leaf"></i> CEK STATUS</a></li>
+                                            </ul>
+                                        </li>
                                         <!-- <li class="has-children">
                                             <a href="#"><i class="fa fa-money"></i> KEUANGAN</a>
                                             <ul class="dropdown arrow-top">

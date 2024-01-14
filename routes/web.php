@@ -109,6 +109,7 @@ Route::prefix('beranda')->group(function () {
     // pelayanan
     Route::get('pelayanan', 'BerandaController@pelayanan');
 
+
     // artikel
     Route::get('artikel', 'BerandaController@artikel');
     Route::get('artikel/cari', 'BerandaController@artikelCari');
@@ -121,17 +122,17 @@ Route::prefix('beranda')->group(function () {
 
     Route::get('dashboard', 'DashboardController@dashboardPengguna');
     Route::get('dashboard/tambah', 'DashboardController@tambahArtikel');
-    Route::get('dashboard/tambah/permohonan', 'DashboardController@tambahPermohonan');
     Route::post('dashboard', 'DashboardController@storeArtikel');
     Route::get('dashboard/{id}/edit', 'DashboardController@editArtikel');
     Route::patch('dashboard/{id}', 'DashboardController@updateArtikel');
     Route::delete('dashboard/{id}', 'DashboardController@destroyArtikel');
-
     // Permohonan
     Route::post('dashboard/permohonan', 'DashboardController@storePermohonan');
 
     Route::get('dashboard/edit-pengguna', 'DashboardController@editPengguna');
     Route::patch('dashboard/edit-pengguna/{id}', 'DashboardController@updatePengguna');
+    // Route::get('pelayanan/tambah/permohonan', 'BerandaController@tambahPermohonan');
+
 });
 
 Route::get('masuk', 'BerandaController@masuk');
@@ -140,6 +141,14 @@ Route::get('daftar', 'BerandaController@daftar');
 Route::post('daftar', 'BerandaController@daftarPengguna');
 // Route::get('daftar/daftarpenduduk', 'BerandaController@daftarpenduduk');
 // Route::post('daftarpenduduk', 'BerandaController@daftarPengguna');
+
+Route::get('pelayanan/permohonan', 'BerandaController@tampilanPermohonan')->name('tampilanPermohonan');
+Route::get('pelayanan/tambah/permohonan', 'BerandaController@tambahPermohonan');
+Route::post('pelayanan/tambah/permohonan/', 'BerandaController@findNik');
+Route::post('pelayanan/kirim/permohonan/', 'BerandaController@storePermohonan');
+Route::get('pelayanan/cek/permohonan/', 'BerandaController@halamanCekStatus');
+Route::post('pelayanan/cek/permohonan/', 'BerandaController@cekStatusNik');
+
 Route::get('keluar', 'BerandaController@keluar');
 
 // admin dashboard
@@ -208,6 +217,8 @@ Route::get('verifikasi-penduduk', 'PendudukController@verifPenduduk');
 // artikel
 Route::post('artikel/validasi/{artikel}', 'ArtikelController@validasi');
 Route::get('artikel/cari', 'ArtikelController@cari');
+Route::get('artikel/create', 'ArtikelController@create');
+Route::post('artikel/create', 'ArtikelController@storeArtikel');
 Route::resource('artikel', 'ArtikelController');
 
 // permohonan
